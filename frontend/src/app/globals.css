@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans;
+    font-feature-settings: 'cv05' 1, 'ss01' 1;
+  }
+
+  /* Money and counts are read in columns, so they get tabular figures everywhere. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-pine ring-offset-2 ring-offset-paper;
+  }
+
+  ::selection {
+    @apply bg-pine/15;
+  }
+}
+
+@layer components {
+  /* The hairline rule that runs under section headers -- the one piece of ledger furniture. */
+  .rule {
+    @apply border-b border-line;
+  }
+
+  .card {
+    @apply rounded-lg border border-line bg-surface shadow-card;
+  }
+
+  .label-eyebrow {
+    @apply font-mono text-[10px] uppercase tracking-[0.14em] text-ink-faint;
+  }
+}
+
+/* Scrollbars: thin enough to disappear, present enough to grab on the board. */
+.scroll-thin::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #d6d3ca;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+.scroll-thin::-webkit-scrollbar-thumb:hover {
+  background: #bdb9ae;
+  background-clip: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
