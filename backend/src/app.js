@@ -22,7 +22,11 @@ app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 if (!env.isProd) app.use(morgan('dev'));
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+const isVercel = process.env.VERCEL === '1';
+const uploadDir = isVercel
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, '../uploads');
+app.use('/uploads', express.static(uploadDir));
 app.use('/api', routes);
 app.use(notFound);
 app.use(errorHandler);

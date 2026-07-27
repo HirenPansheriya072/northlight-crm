@@ -6,8 +6,12 @@ const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const { logActivity } = require('../utils/activity');
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../../uploads');
+// Use /tmp/uploads on Vercel since the root filesystem is read-only
+const isVercel = process.env.VERCEL === '1';
+const uploadDir = isVercel
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, '../../uploads');
+
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
